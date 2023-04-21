@@ -9,95 +9,87 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import datetime as date
 import serial
 import serial.tools.list_ports as serPorts
-from multiprocessing import Process
-import queue 
 import threading
-import time
+import glob
+# from multiprocessing import Process
+# import queue 
 
+import time
+import schedule # not built in library
+import os
+import signal
+import subprocess
+from datetime import datetime
+import psutil
 
 import gradio as gr
 
 
 # ==========================================================================
-# Variable section
-# ==========================================================================
-serialGlobal=serial
-ser=serial.Serial()
-boolPrintSerial=False
-
-# ==========================================================================
 # Class section
 # ==========================================================================
 
-class ReadLine:
-    def __init__(self, s):
-        self.buf = bytearray()
-        self.s = s
+# class ReadLine:
+#     def __init__(self, s):
+#         self.buf = bytearray()
+#         self.s = s
     
-    def readline(self):
-        i = self.buf.find(b"\n")
-        if i >= 0:
-            r = self.buf[:i+1]
-            self.buf = self.buf[i+1:]
-            return r
-        while True:
-            i = max(1, min(2048, self.s.in_waiting))
-            data = self.s.read(i)
-            i = data.find(b"\n")
-            if i >= 0:
-                r = self.buf + data[:i+1]
-                self.buf[0:] = data[i+1:]
-                return r
-            else:
-                self.buf.extend(data)
+#     def readline(self):
+#         i = self.buf.find(b"\n")
+#         if i >= 0:
+#             r = self.buf[:i+1]
+#             self.buf = self.buf[i+1:]
+#             return r
+#         while True:
+#             i = max(1, min(2048, self.s.in_waiting))
+#             data = self.s.read(i)
+#             i = data.find(b"\n")
+#             if i >= 0:
+#                 r = self.buf + data[:i+1]
+#                 self.buf[0:] = data[i+1:]
+#                 return r
+#             else:
+#                 self.buf.extend(data)
                 
 
 # ==========================================================================
 # Function section
 # ==========================================================================
 
-def serialPrint(inqueue):
-    global ser
-    print("Hallow??")
-    while True:
-        #buf = str(ser.readline())
-        inqueue.put("buf")
+# def serialPrint(inqueue):
+#     global ser
+#     print("Hallow??")
+#     while True:
+#         #buf = str(ser.readline())
+#         inqueue.put("buf")
 
-def startProcess():
-    #set_start_method("spawn")
-    Process(target=serialPrint).start()
-    return 
+# def startProcess():
+#     #set_start_method("spawn")
+#     Process(target=serialPrint).start()
+#     return 
 
-def listPort():
-    buffer=''
-    for port in sorted(serPorts.comports()):
-        buffer+=str(port) + "\n"
-    return buffer
+# def connectPort(port, baudrate):
+#     global ser
+#     global boolPrintSerial
+#     global getDataBtn
+    
+    
+#     if port=='' or baudrate=='': 
+#         return "## ⚠ Select Port and Baudrate!!!"
+#     try:
+#         ser = serial.Serial(port=port, baudrate=baudrate)
+#         ser=ser
         
-
-def connectPort(port, baudrate):
-    global ser
-    global boolPrintSerial
-    global getDataBtn
+#     except serial.serialutil.SerialException as e:
+#         boolPrintSerial=False
+#         return "❌ port NOT Connected: " + str(port) + str(e) 
     
     
-    if port=='' or baudrate=='': 
-        return "## ⚠ Select Port and Baudrate!!!"
-    try:
-        ser = serial.Serial(port=port, baudrate=baudrate)
-        ser=ser
-        
-    except serial.serialutil.SerialException as e:
-        boolPrintSerial=False
-        return "❌ port NOT Connected: " + str(port) + str(e) 
-    
-    
-    boolPrintSerial=True
-    print(ser.is_open)
-    return "✅ port Connected: " + str(port) + "\ninfo: " + str(ser) 
+#     boolPrintSerial=True
+#     print(ser.is_open)
+#     return "✅ port Connected: " + str(port) + "\ninfo: " + str(ser) 
 
 def plot_forecast(final_year, companies, noise, show_legend, point_style):
     start_year = 2020
@@ -121,6 +113,43 @@ def plot_random():
     ax = fig.add_subplot(111)
     ax.plot(range(0,100), y)
     return fig
+
+def listPort():
+    buffer=''
+    for port in sorted(serPorts.comports()):
+        buffer+=str(port) + "\n"
+    return buffer
+
+def getRawData(com):
+    currentProcess = psutil.Process()
+    children = currentProcess.children(recursive=True)
+    
+    # if still have another process, kill it
+    if len(children)>0:
+        for child in children:
+            os.kill(child.pid, signal.SIGTERM)
+            
+    # execute operation
+    dir = os.path.dirname(__file__)
+    filename = str(datetime.today().strftime('%Y_%m_%d__%H%M%S')) + ".csv"
+    filename = os.path.join(dir, filename)
+    print(f'Create File: {filename}')
+    file = open(filename, "w+")
+    
+    command = ["cat", com]
+    p = subprocess.Popen(command, stdout=file)
+    print(f'{p}\t{p.pid}')        
+    return f'{p}\t{p.pid}'
+    
+def startSchedule(t, com):
+    
+    print(f't: {int(t)}, com: {com}')
+    if com == '' or t == '': 
+        return
+    
+    schedule.clear()
+    schedule.every(int(t)).seconds.do(getRawData,com=com)
+    return "schedule created"
 
 """
 TODO: 
@@ -148,20 +177,19 @@ with bl:
             gr.Markdown("## Port Settings: ")
             portListMd = gr.Markdown()
             
-            port = gr.Textbox(max_lines=1, label="insert port")
-            baudrate = gr.Radio([19200, 38400, 57600, 115200, 128000 ],label="choose baudrate")
-            
-            listPortBtn = gr.Button(value="List Port")
-            serialBtn = gr.Button(value="Connect")
-            getDataBtn = gr.Button(value="Get Data")
+            with gr.Row():
+                port = gr.Textbox(max_lines=1, label="insert port")
+                intime = gr.Number(label="Every", value=5, interactive=True)
             
             
-            portConStatus = gr.Markdown()
-            portConnectionStatus = gr.Markdown()
-            
-            serialBtn.click(connectPort, inputs=[port,baudrate], outputs=portConnectionStatus)
-            listPortBtn.click(listPort, outputs=portListMd)
-            getDataBtn.click(startProcess)
+            startStatus = gr.Markdown(value="yoyoyo")
+            with gr.Row():
+                listPortBtn = gr.Button(value="List Port")
+                startBtn = gr.Button(value="Start")
+                
+                listPortBtn.click(listPort, outputs=portListMd)
+                startBtn.click(startSchedule, inputs=[intime, port], outputs=startStatus)
+                
             
             
             # modbus section 
@@ -191,7 +219,8 @@ with bl:
             with gr.Column():
                 gr.Markdown("## show current image data here")
                 randomPlot = gr.Plot(label="current data")
-                gr.Markdown("## "+str(date.datetime.now()))
+                gr.Markdown("## "+str(datetime.now()))
+                
                 
                 bl.load(plot_random,outputs=randomPlot)
                 
@@ -201,31 +230,32 @@ with bl:
                 predictionResult = gr.Plot()
                 bl.load(plot_random,outputs=predictionBar)
                 bl.load(plot_random,outputs=predictionResult)
-                
-            
-def startGradio():
-    bl.launch(server_port=8070, debug=True)
-    
-def main():
-    
-    global serialGlobal
-    global ser
-    
-    ser = serialGlobal.Serial(port='com9', baudrate=115200)
-    
-    serialQueue = queue.Queue()
-    serialThread = threading.Thread(target=serialPrint, args=(serialQueue), daemon=True)
-    serialThread.start()
-    
-    #gradioThread = threading.Thread(target=startGradio, daemon=True)
-    #gradioThread.start()
-    
-    while(True):
-        #print(serialQueue.qsize())
-        if serialQueue.qsize()>0:
-            print(str(serialQueue.get()))
-        time.sleep(0.01)
-    
-    print("until DOWN!!")
 
+
+def startGradio():
+    print("Star Gradio Server")
+    bl.launch(server_port=8070, debug=True)
+
+def main():
+    schedule.clear()
+    while True:
+        schedule.run_pending()
+        dirname = os.path.join(os.path.dirname(__file__), 'csv','*') 
+        listFile = glob.glob(dirname)
+        lastFile = max(listFile, key=os.path.getmtime)
+        print(lastFile)
+        
+        
+        
+gradioThread = threading.Thread(target=startGradio, daemon=True)
+gradioThread.start()
+
+print("Starting Main Program!!")
 main()
+    
+
+    
+    
+
+
+
