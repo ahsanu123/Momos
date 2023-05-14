@@ -40,6 +40,13 @@ gr.close_all()
 latestFile = ''
 # fig = go.Figure()
 # fig.add_scatter(x=x, y=y, mode="lines", name ="fft")
+grmsIA=0.
+grmsIB=0.
+grmsIC=0.
+grmsVibx=0.
+grmsViby=0.
+grmsVibz=0.
+gtemp=0.
 
 
 # ==========================================================================
@@ -53,6 +60,8 @@ latestFile = ''
 # ==========================================================================
 plot_end = 2 * math.pi
 
+def moving_average(x, w):
+    return np.convolve(x, np.ones(w), 'valid') / w
 
 def get_plot(period=1):
     global plot_end
@@ -66,19 +75,36 @@ def get_plot(period=1):
 
 def currentPlot():
     global latestFile
-    data = pd.read_csv(latestFile)
-    data.columns = ['time', 'ia', 'ib', 'ic' ,'vref', 'vtemp', 'x', 'y', 'z', 'temp' ]
+    global gtemp
+    global grmsIA
+    global grmsIB
+    global grmsIC
+    
+    data = pd.read_csv(latestFile, on_bad_lines='skip')
+    # data.columns = ['time', 'ia', 'ib', 'ic' ,'vref', 'vtemp', 'x', 'y', 'z', 'temp' ]
+    data.columns = [ 'ia', 'ib', 'ic' , 'x', 'y', 'z', 'temp' ]
     
     ia = data['ia']
     ib = data['ib']
     ic = data['ic']
     
-    ia = np.array(ia)
-    ib = np.array(ib)
-    ic = np.array(ic)
-    ia = ia/4095.0 *3.3
-    ib = ib/4095.0 *3.3
-    ic = ic/4095.0 *3.3
+    ia = (np.array(ia) /4095. * 3.3) - 2.
+    ib = (np.array(ib) /4095. * 3.3) - 2.
+    ic = (np.array(ic) /4095. * 3.3) - 2.
+    ia = moving_average(ia,12)
+    ib = moving_average(ib,12)
+    ic = moving_average(ic,12)
+    
+    temp = data['temp']
+    temp = temp[temp.index % 10 == 0]
+    temp = np.array(temp)
+    temp = moving_average(temp, 10)
+    
+    # hitung RMS =============================
+    grmsIA = np.sqrt(np.mean(ia**2))
+    grmsIB = np.sqrt(np.mean(ib**2))
+    grmsIC = np.sqrt(np.mean(ic**2))
+    gtemp  = np.average(temp)
     
     # IA =============================
     iaffty = fft(ia, norm="forward")
@@ -141,16 +167,40 @@ def currentPlot():
 
 def vibrationPlot():
     global latestFile
-    data = pd.read_csv(latestFile)
-    data.columns = ['time', 'ia', 'ib', 'ic' ,'vref', 'vtemp', 'x', 'y', 'z', 'temp' ]
+    global grmsVibx   
+    global grmsViby
+    global grmsVibz
     
+    
+    data = pd.read_csv(latestFile, on_bad_lines='skip')
+    # data.columns = ['time', 'ia', 'ib', 'ic' ,'vref', 'vtemp', 'x', 'y', 'z', 'temp' ]
+    data.columns = [ 'ia', 'ib', 'ic' , 'x', 'y', 'z', 'temp' ]
+        
     vibx = data['x']
+    vibx = vibx[vibx.index % 10 == 0]
+    vibx = np.array(vibx)
+    
     viby = data['y']
+    viby = viby[viby.index % 10 == 0]
+    viby = np.array(viby)
+    
     vibz = data['z']
+    vibz = vibz[vibz.index % 10 == 0]
+    vibz = np.array(vibz)
+    
+    vibx = moving_average(vibx, 4)
+    viby = moving_average(viby, 4)
+    vibz = moving_average(vibz, 4)
     
     vibx = np.array(vibx)
     viby = np.array(viby)
     vibz = np.array(vibz)
+    
+    # hitung RMS =============================
+    grmsVibx = np.sqrt(np.mean(vibx**2))
+    grmsViby = np.sqrt(np.mean(viby**2))
+    grmsVibz = np.sqrt(np.mean(vibz**2))
+    
     
     # VibX =============================
     vibxffty = fft(vibx, norm="forward")
@@ -215,8 +265,9 @@ def preprocessing():
     global latestFile
     # global fig
     
-    data = pd.read_csv(latestFile)
-    data.columns = ['time', 'ia', 'ib', 'ic' ,'vref', 'vtemp', 'x', 'y', 'z', 'temp' ]
+    data = pd.read_csv(latestFile, on_bad_lines='skip')
+    # data.columns = ['time', 'ia', 'ib', 'ic' ,'vref', 'vtemp', 'x', 'y', 'z', 'temp' ]
+    data.columns = [ 'ia', 'ib', 'ic' , 'x', 'y', 'z', 'temp' ]
     
     ia = data['ia']
     ib = data['ib']
@@ -337,14 +388,19 @@ def preprocessing():
     
     return fig
 
-def updatePreprocessing():
-    global fig
+def getStatus():
+    global grmsIA
+    global grmsIB
+    global grmsIC
+    global grmsVibx
+    global grmsViby
+    global grmsVibz
+    global gtemp
     
-    x = [1,2,3,4,5,6,7,8,9]
-    y = np.random.rand(9)
-    
-    fig.data[0].x=x
-    fig.data[0].y=y
+    status = '### RMS IA: ' + str(grmsIA) + ' RMS IB: ' + str(grmsIB) + ' RMS IC: ' + str(grmsIC) + '<br>'
+    status += 'RMS Vibx: ' + str(grmsVibx) + ' RMS Viby: ' + str(grmsViby) + ' RMS Vibz: ' + str(grmsVibz) + '<br>'
+    status += 'temperature: ' + str(gtemp)
+    return status
 
 def listPort():
     buffer=''
@@ -363,8 +419,9 @@ def getRawData(com):
             
     # execute operation
     dir = os.path.dirname(__file__)
+    # dir = os.path.join(dir,"csv")
     filename = str(datetime.today().strftime('%Y_%m_%d__%H%M%S')) + ".csv"
-    filename = os.path.join(dir, filename)
+    filename = os.path.join(dir,'csv', filename)
     print(f'Create File: {filename}')
     file = open(filename, "w+")
     
@@ -377,7 +434,7 @@ def startSchedule(t, com):
     
     print(f't: {int(t)}, com: {com}')
     if com == '' or t == '': 
-        return
+        return "insert port and time please!!"
     
     schedule.clear()
     schedule.every(int(t)).seconds.do(getRawData,com=com)
@@ -403,16 +460,16 @@ TODO:
 
 bl = gr.Blocks(title="MoMoS - Motor Monitoring system")
 with bl:
-    gr.Markdown("# MoMos - Motor Monitoring System Dashboard")    
-    
-    with gr.Tab("STATUS"):
-        gr.Markdown("# Status")
+    gr.Markdown("# MoMos - Motor Monitoring System ")    
     
     with gr.Tab("DASHBOARDS"):
         gr.Markdown("# Dashboard")
         
         with gr.Column():
             gr.Markdown("## Time Series ⌚ ")
+            statusMd = gr.Markdown()
+            statusRepeat = bl.load(getStatus, None, statusMd, every=5)
+            
             up=gr.Button(value="Update From Last Data")
             plotCur1 = gr.Plot(label="Dashboard 1")
             
