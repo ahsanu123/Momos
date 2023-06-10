@@ -2,7 +2,7 @@
 contain design board of my final project, and program c/c++ and python.
 
 
-![GameConsole_pic1.jpg](https://raw.githubusercontent.com/wagiminator/CH32V003-GameConsole/main/documentation/GameConsole_pic1.jpg)
+![kicadIcon.jpg](https://freesvg.org/img/KiCad_icon.png)
 
 # Hardware
 ## Schematic
@@ -15,22 +15,9 @@ contain design board of my final project, and program c/c++ and python.
 - [WCH: WCH-Link user manual](http://www.wch-ic.com/downloads/WCH-LinkUserManual_PDF.html)
 - [WCH: Official Store on AliExpress](https://wchofficialstore.aliexpress.com)
 
-![GameConsole_pic2.jpg](https://raw.githubusercontent.com/wagiminator/CH32V003-GameConsole/main/documentation/GameConsole_pic2.jpg)
-
 # License
 
 ![license.png](https://i.creativecommons.org/l/by-sa/3.0/88x31.png)
 
 This work is licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License. 
 (http://creativecommons.org/licenses/by-sa/3.0/)
-
-```
-```
-```
-```
-```
-```
-```
-```
-```
-```
