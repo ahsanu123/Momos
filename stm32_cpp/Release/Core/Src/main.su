@@ -1,0 +1,14 @@
+../Core/Src/main.cpp:609:10:uint16_t float_to_uint16(float)	8	static
+../Core/Src/main.cpp:621:16:int _write(int, char*, int)	8	static
+../Core/Src/main.cpp:625:6:void printBin(unsigned char)	24	static
+../Core/Src/main.cpp:633:6:void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef*)	8	static
+../Core/Src/main.cpp:756:6:void modbusTask(void*)	8	static
+../Core/Src/main.cpp:775:6:void spiTask(void*)	8	static
+../Core/Src/main.cpp:826:6:void cdcTask(void*)	8	static
+../Core/Src/main.cpp:885:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	0	static
+../Core/Src/main.cpp:902:6:void Error_Handler()	8	static,ignoring_inline_asm
+../Core/Src/main.cpp:496:13:void MX_USART3_UART_Init()	8	static
+../Core/Src/main.cpp:658:6:void analogTask(void*)	112	static
+../Core/Src/main.cpp:279:6:void SystemClock_Config()	88	static
+../Core/Src/main.cpp:169:5:int main()	88	static
+../Core/Src/main.cpp:912:1:cpp)	8	static

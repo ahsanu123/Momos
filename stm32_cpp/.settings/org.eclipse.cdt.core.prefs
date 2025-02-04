@@ -1,0 +1,11 @@
+doxygen/doxygen_new_line_after_brief=true
+doxygen/doxygen_use_brief_tag=false
+doxygen/doxygen_use_javadoc_tags=true
+doxygen/doxygen_use_pre_tag=false
+doxygen/doxygen_use_structural_commands=false
+eclipse.preferences.version=1
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.69203589/PATH/delimiter=;
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.69203589/PATH/operation=replace
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.69203589/PATH/value=D\:\\STM32\\STM32CubeIDE_1.9.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.100.202210260954\\tools\\bin;D\:\\STM32\\STM32CubeIDE_1.9.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltools.make.win32_2.0.100.202202231230\\tools\\bin;D\:/STM32/STM32CubeIDE_1.9.0/STM32CubeIDE//plugins/com.st.stm32cube.ide.jre.win64_2.3.0.202207290817/jre/bin/server;D\:/STM32/STM32CubeIDE_1.9.0/STM32CubeIDE//plugins/com.st.stm32cube.ide.jre.win64_2.3.0.202207290817/jre/bin;C\:\\Windows\\System32;C\:\\Windows\\System32\\OpenSSH;D\:\\Python\\Scripts\\;D\:\\Python\\;D\:\\Python3.8\\Scripts\\;D\:\\Python3.8\\;C\:\\Users\\caasper\\AppData\\Local\\Microsoft\\WindowsApps;D\:\\CLion 2020.2.1\\bin;;D\:\\Microsoft VS Code\\bin;C\:\\Users\\caasper\\AppData\\Roaming\\npm;D\:\\heroku\\bin;C\:\\Users\\caasper\\AppData\\Roaming\\Composer\\vendor\\bin;C\:\\Program Files\\Git\\bin;C\:\\Program Files\\Notepad++;D\:\\NodeJs;D\:\\arduino-cli\\bin;C\:\\Program Files\\Git\\bin;D\:\\STM32\\STM32CubeProgrammer\\bin;D\:\\Msys2\\mingw32\\bin;D\:\\Faust\\bin;D\:\\msys1\\bin;D\:\\STM32\\ST-Link Utility\\ST-LINK Utility;D\:\\AtomicParsley;D\:\\ffmpeg\\bin;C\:\\tools\\vim\\vim82;;D\:\\STM32\\STM32CubeIDE_1.9.0\\STM32CubeIDE; D\:\\STM32CUBEIDEWorkspace1.9.0\\MMA_7455
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.69203589/append=true
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.69203589/appendContributed=true

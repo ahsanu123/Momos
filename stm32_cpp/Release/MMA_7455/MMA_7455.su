@@ -1,0 +1,45 @@
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:711:9:uint8_t MMA_7455::_readRegSPI(uint8_t)	32	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:751:6:void MMA_7455::_writeRegSPI(uint8_t, uint8_t)	16	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:49:1:MMA_7455::MMA_7455(MMA7455_PROTOCOL)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:63:1:MMA_7455::MMA_7455(MMA7455_PROTOCOL, uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:81:6:void MMA_7455::begin()	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:130:6:void MMA_7455::setChipSelectPin(uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:141:6:void MMA_7455::setSensitivity(int)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:167:5:int MMA_7455::getSensitivity()	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:193:6:void MMA_7455::setMode(MODE)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:222:6:MODE MMA_7455::getMode()	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:250:6:void MMA_7455::setSelfTest(bool)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:265:6:void MMA_7455::enableDetectionXYZ(bool, bool, bool)	16	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:283:6:void MMA_7455::setLevelPolarity(LEVEL_MODE)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:302:6:void MMA_7455::setLevelPolarity(unsigned int)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:321:6:void MMA_7455::setThresholdMode(TH_MODE)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:340:6:void MMA_7455::setThresholdMode(unsigned int)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:359:6:void MMA_7455::setLevelThresholdLimit(int8_t)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:394:6:void MMA_7455::setPulsePolarity(PULSE_MODE)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:413:6:void MMA_7455::setPulsePolarity(unsigned int)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:432:6:void MMA_7455::setPulseThresholdLimit(uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:440:6:void MMA_7455::setPulseDuration(uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:448:6:void MMA_7455::setPulseLatency(uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:456:6:void MMA_7455::setPulseDuration2(uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:464:8:int8_t MMA_7455::readAxis8(char)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:495:6:void MMA_7455::readAxis8(int8_t*, int8_t*, int8_t*)	16	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:503:7:float MMA_7455::readAxis8g(char)	24	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:520:6:void MMA_7455::readAxis8g(float*, float*, float*)	24	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:528:9:int16_t MMA_7455::readAxis10(char)	16	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:570:6:void MMA_7455::readAxis10(int16_t*, int16_t*, int16_t*)	24	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:578:7:float MMA_7455::readAxis10g(char)	24	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:595:6:void MMA_7455::readAxis10g(float*, float*, float*)	24	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:603:6:void MMA_7455::setAxisOffset(int16_t, int16_t, int16_t)	16	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:617:6:void MMA_7455::getAxisOffset(int16_t*, int16_t*, int16_t*)	24	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:636:6:void MMA_7455::setInterruptMode(ISR_MODE)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:645:6:void MMA_7455::getLevelDetection(bool*, bool*, bool*)	16	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:654:6:void MMA_7455::getPulseDetection(bool*, bool*, bool*)	16	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:663:6:void MMA_7455::getInterrupt(bool*, bool*)	16	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:671:6:void MMA_7455::clearInterrupt()	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:678:6:void MMA_7455::enableInterruptPins(bool)	8	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:687:9:uint8_t MMA_7455::readReg(uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:695:9:uint8_t MMA_7455::_readRegI2C(uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:711:9:uint8_t MMA_7455::_readRegSPI(uint8_t)	32	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:734:6:void MMA_7455::writeReg(uint8_t, uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:742:6:void MMA_7455::_writeRegI2C(uint8_t, uint8_t)	0	static
+D:/STM32CUBEIDEWorkspace1.9.0/MMA_7455/MMA_7455.cpp:751:6:void MMA_7455::_writeRegSPI(uint8_t, uint8_t)	16	static
